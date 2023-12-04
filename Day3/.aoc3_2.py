@@ -1,3 +1,24 @@
+"""
+NOTE: This is not the final answer. I figured out in the middle of writting this
+script that the way I was trying to do it was wrong, should not be done, and will
+not be done.
+
+Basically, what I was doing is checking each number, finding adjacent stars,
+and then checking each position around the star based in it's position regarding
+the first number. Each position has a set number of cells that can be checked for
+numbers.
+
+But then I realized that all of this was too convoluted, and figured out that it
+would be much better to just find each star and then finding adjacent numbers
+instead.
+
+The aoc3_2.py (without the leading dot) contains the final answer using this
+method.
+
+This script exists only to shame myself for being this dumb. The other way is
+much better and less convoluted. Maybe it's not the best implementation, maybe
+there are better ways to do it, but it does it's honest job.
+"""
 grid = []
 x_length = 0
 y_length = 0
