@@ -54,20 +54,45 @@ with open("puzzle.txt") as puzzle_test:
 
 m = 9999999999999999999
 count = 0
-for interv in sorted(list(maps["humidity-to-location"])):
-    print(f"Checking interval {interv}...\n")
-    d,s,r = interv
-    if d - s <= 0:
-        for i in range(d, d+r):
-            c = loc_to_seed(i)
-            for sint in seeds:
-                min,r = sint
-                if min <= c < min+r:
-                    if c < m:
-                        m = c
-                        print(f"m\n")
-            count += 1
-            if count % 1000000 == 0:
-                print(f"Still working... Current: {m if m < 9999999999999999999 else 'Not found'} Iterations: {count/(10**6)}x10^6\n")
+"""
+This solution is trash, but right now I don't know of a better way to do this
+other than brute force my way into it.
+
+How do I know that I should look up from values 411264428 downwards? Well, it's
+simple. I ran the code I commented below, which checked only the intervals in
+the last map. That told me what value in those intervals has the least value, and
+then I figured I should just check from there, below.
+
+Perhaps starting from 0 onwards would have been a much better idea.
+
+Eventually, after a hour or so, it will find the solution. Again, it's trash,
+but this is the best I can do right now. Hey, at least it works... ¯\_(ツ)_/¯
+"""
+for i in range(411264428, 0, -1):
+    c = loc_to_seed(i)
+    for sint in seeds:
+        min,r = sint
+        if min <= c < min+r:
+            if c < m:
+                m = c
+        count += 1
+        if count % 1000000 == 0:
+            print(f"Still working... Step {int(i/1000000)}x10^6 Current: {m if m < 9999999999999999999 else 'Not found'} Iterations: {count/(10**6)}x10^6\n")
+
+#for interv in sorted(list(maps["humidity-to-location"])):
+#    print(f"Checking interval {interv}...\n")
+#    d,s,r = interv
+#    c = loc_to_seed(d)
+#    cr = loc_to_seed(d+r)
+#    c = cr if cr < c else c
+#    for sint in seeds:
+#        min,r = sint
+#        if min <= c < min+r:
+#            if c < m:
+#                m = c
+#                print(f"{m}\n")
+#        count += 1
+#        if count % 1000000 == 0:
+#            print(f"Still working... Current: {m if m < 9999999999999999999 else 'Not found'} Iterations: {count/(10**6)}x10^6\n")
 
 print(f"Answer: {m}, seed: {seed_to_loc(m)}") # 27992443
