@@ -1,11 +1,8 @@
-from math import sqrt
+from math import sqrt, ceil
 
 # Common lambda functions I use for handling sets and arrays
 filterstrlist = lambda lst: [i.strip() for i in filter(lambda x: x != " " and x != "" and x != "", lst)]
 zipsets = lambda s1,s2: set(zip(s1, s2))
-
-# This is a rounding function required for the interval when using integers
-rounding = lambda x: int(x) if x == int(x) else int(x) +1
 
 # Quadratic equation solver, returns the velocity in terms of the distance (d) and
 # a constant max time for the race (r).
@@ -46,6 +43,6 @@ if mdist > wd:
     # (wv1, wv2) will result in a greater distance. However, d is an
     # integer, therefore we need to mind the rounding.
     # The number of wins is wv2 - wv1 - 1
-    print(f"Total wins: {abs(rounding(wv2) - int(wv1) - 1)}") # 28973936
+    print(f"Total wins: {abs(ceil(wv2) - int(wv1) - 1)}") # 28973936
 else:
     print("Not winnable")
