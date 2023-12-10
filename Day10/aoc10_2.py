@@ -16,7 +16,7 @@ to the left of any . is odd. If so, it counts. That's not true.
 
 Consider the following example:
 
-.F-------7.
+.S-------7.
 .|...F--7|.
 .L---J..L7.
 
