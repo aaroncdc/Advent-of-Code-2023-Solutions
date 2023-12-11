@@ -128,35 +128,45 @@ while tuple(ctile) != start or tiles == 0:
     # Increase the number of tiles traversed.
     tiles += 1
 
-#print(f"{ceil(tiles/2)}") # 6867
-
-# Sort the tile list in the loop
-for k in loop_tiles.keys():
-    loop_tiles[k] = sorted(loop_tiles[k])
-
 loop_min_y = min([int(c) for c in list(loop_tiles.keys())])
 loop_max_y = max([int(c) for c in list(loop_tiles.keys())])
 loop_min_x = 99999
 loop_max_x = 0
 
-for row in loop_tiles:
-    tl = [int(x) for x in row]
-    loop_min_x = min(tl) if min(tl) < loop_min_x else loop_min_x
-    loop_max_x = max(tl) if max(tl) > loop_max_x else loop_max_x
+# Sort the tile list in the loop
+for k in loop_tiles.keys():
+    loop_tiles[k] = sorted(loop_tiles[k])
+    loop_min_x = min(loop_tiles[k]) if min(loop_tiles[k]) < loop_min_x else loop_min_x
+    loop_max_x = max(loop_tiles[k]) if max(loop_tiles[k]) > loop_max_x else loop_max_x
 
-print(loop_tiles)
+print(loop_min_x, loop_max_x, loop_min_y, loop_max_y)
 
-"""
-L7  FJ
-"""
 on_wall = False
 inside = False
 possible_nests = 0
+wall_line = ""
 for y in range(loop_min_y, loop_max_y+1, 1):
     inside = False
     for x in range(loop_min_x, loop_max_x+1, 1):
-        if grid[y][x] in list(TILES.keys()) and x in loop_tiles[str(y)]:
-            inside = not inside
-        elif inside:
-            possible_nests += 1
+        if x in loop_tiles[str(y)]:
+            wall_line += grid[y][x]
+        else:
+            if len(wall_line) > 0:
+                strd = wall_line.replace("-", "")
+                if len(strd) > 1:
+                    if strd[-1] == "L" and strd[-2] == "J" and inside:
+                        pass
+                    if strd[-1] == "F" and strd[-2] == "7" and inside:
+                        pass
+                    elif strd[-1] == "7" and strd[-2] == "L":
+                        inside = True
+                    else: inside = False
+                else:
+                    if strd[0] == "|": inside = True
+                    else: inside = False
+                print(strd)
+                wall_line = ""
+            else:
+                if inside: possible_nests += 1
+
 print(possible_nests)
